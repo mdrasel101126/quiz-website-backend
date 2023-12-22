@@ -15,24 +15,24 @@ const createQuiz = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-/* const updateCategory = catchAsync(async (req: Request, res: Response) => {
-  const result = await CategoryService.updateCategory(req.params?.id, req.body);
-  sendResponse<Category>(res, {
+const updateQuiz = catchAsync(async (req: Request, res: Response) => {
+  const result = await QuizService.updateQuiz(req.params?.id, req.body);
+  sendResponse<Quiz>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Category updated successfully',
+    message: 'Quiz updated successfully',
     data: result,
   });
-}); */
-/* const deleteCategory = catchAsync(async (req: Request, res: Response) => {
-  const result = await CategoryService.deleteCategory(req.params?.id);
-  sendResponse<Category>(res, {
+});
+const deleteQuiz = catchAsync(async (req: Request, res: Response) => {
+  const result = await QuizService.deleteQuiz(req.params?.id);
+  sendResponse<Quiz>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Category deleted successfully',
+    message: 'Quiz deleted successfully',
     data: result,
   });
-}); */
+});
 const getSingleQuiz = catchAsync(async (req: Request, res: Response) => {
   const result = await QuizService.getSingleQuiz(req.params?.id);
   sendResponse<Quiz>(res, {
@@ -42,17 +42,30 @@ const getSingleQuiz = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-/* const getAllCategory = catchAsync(async (req: Request, res: Response) => {
-  const result = await CategoryService.getAllCategory();
-  sendResponse<Category[]>(res, {
+const getAllQuizByCategory = catchAsync(async (req: Request, res: Response) => {
+  const result = await QuizService.getAllQuizByCategory(req.params?.id);
+  sendResponse<Quiz[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Categories retrived successfully',
+    message: 'Quizzes retrived successfully',
     data: result,
   });
-}); */
+});
+const getExamQuestions = catchAsync(async (req: Request, res: Response) => {
+  const result = await QuizService.getExamQuestions(req.params?.id);
+  sendResponse<Quiz[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Quizzes retrived successfully',
+    data: result,
+  });
+});
 
 export const QuizController = {
   createQuiz,
   getSingleQuiz,
+  getAllQuizByCategory,
+  getExamQuestions,
+  deleteQuiz,
+  updateQuiz,
 };

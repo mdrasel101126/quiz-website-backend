@@ -1,4 +1,4 @@
-import { Category, Quiz } from '@prisma/client';
+import { Quiz } from '@prisma/client';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
 import prisma from '../../../shared/prisma';
@@ -12,26 +12,26 @@ const createQuiz = async (data: Quiz): Promise<Quiz> => {
   });
   return result;
 };
-const updateCategory = async (
+const updateQuiz = async (
   id: string,
-  payload: Partial<Category>
-): Promise<Category> => {
-  const isExist = await prisma.category.findUnique({ where: { id } });
+  payload: Partial<Quiz>
+): Promise<Quiz> => {
+  const isExist = await prisma.quiz.findUnique({ where: { id } });
   if (!isExist) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Category not Found!');
+    throw new ApiError(httpStatus.NOT_FOUND, 'Quiz not Found!');
   }
-  const result = await prisma.category.update({
+  const result = await prisma.quiz.update({
     where: { id },
     data: payload,
   });
   return result;
 };
-const deleteCategory = async (id: string): Promise<Category> => {
-  const isExist = await prisma.category.findUnique({ where: { id } });
+const deleteQuiz = async (id: string): Promise<Quiz> => {
+  const isExist = await prisma.quiz.findUnique({ where: { id } });
   if (!isExist) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Category not Found!');
+    throw new ApiError(httpStatus.NOT_FOUND, 'Quiz not Found!');
   }
-  const result = await prisma.category.delete({
+  const result = await prisma.quiz.delete({
     where: { id },
   });
   return result;
@@ -49,16 +49,24 @@ const getSingleQuiz = async (id: string): Promise<Quiz | null> => {
 
   return result;
 };
-const getAllCategory = async (): Promise<Category[]> => {
-  const result = await prisma.category.findMany();
+const getAllQuizByCategory = async (categoryId: string): Promise<Quiz[]> => {
+  const result = await prisma.quiz.findMany({ where: { categoryId } });
+
+  return result;
+};
+const getExamQuestions = async (categoryId: string): Promise<Quiz[]> => {
+  const result = await prisma.$queryRaw<
+    Quiz[]
+  >`SELECT * FROM "quizzes" WHERE "categoryId" =${categoryId} ORDER BY RANDOM() LIMIT 10 `;
 
   return result;
 };
 
 export const QuizService = {
   createQuiz,
-  updateCategory,
-  deleteCategory,
+  updateQuiz,
+  deleteQuiz,
   getSingleQuiz,
-  getAllCategory,
+  getAllQuizByCategory,
+  getExamQuestions,
 };

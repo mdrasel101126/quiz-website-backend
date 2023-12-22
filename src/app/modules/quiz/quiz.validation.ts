@@ -20,10 +20,25 @@ const createQuiz = z.object({
     ),
   }),
 });
-const updateCategory = z.object({
+const updateQuiz = z.object({
   body: z.object({
-    title: z.string().optional(),
+    categoryId: z.string().optional(),
+    question: z.string().optional(),
+    options: z
+      .array(
+        z.string({
+          required_error: 'Options are required',
+        })
+      )
+      .optional(),
+    answers: z.array(
+      z
+        .string({
+          required_error: 'Options are required',
+        })
+        .optional()
+    ),
   }),
 });
 
-export const QuizValidation = { createQuiz, updateCategory };
+export const QuizValidation = { createQuiz, updateQuiz };

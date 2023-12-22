@@ -13,20 +13,24 @@ router.post(
   validateRequest(QuizValidation.createQuiz),
   QuizController.createQuiz
 );
-/* router.patch(
+router.patch(
   '/:id',
   auth(ENUM_USER_ROLE.ADMIN),
-  validateRequest(CategoryValidation.updateCategory),
-  CategoryController.updateCategory
+  validateRequest(QuizValidation.updateQuiz),
+  QuizController.updateQuiz
 );
-router.delete(
-  '/:id',
-  auth(ENUM_USER_ROLE.ADMIN),
-  CategoryController.deleteCategory
-);
-router.get('/', CategoryController.getAllCategory);
-*/
 
+router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN), QuizController.deleteQuiz);
+router.get(
+  '/category/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  QuizController.getAllQuizByCategory
+);
+router.get(
+  '/exam-quizzes/:id',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.PERFORMER),
+  QuizController.getExamQuestions
+);
 router.get('/:id', QuizController.getSingleQuiz);
 
 export const QuizRoutes = router;
