@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  role       String
+  contactNo  String
+  address    String
+  profileImg String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Category {
+  id              String            @id @default(uuid())
+  title           String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  Quiz            Quiz[]
+  PerformerResult PerformerResult[]
+
+  @@map("categories")
+}
+
+model Quiz {
+  id         String   @id @default(uuid())
+  categoryId String
+  question   String
+  options    String[]
+  answers    String[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@map("quizzes")
+}
+
+model PerformerResult {
+  id            String   @id @default(uuid())
+  userId        String
+  categoryId    String
+  questions     Json?
+  totalQuestion Int
+  totalCorrect  Int
+  review        String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  category      Category @relation(fields: [categoryId], references: [id])
+
+  @@map("performersResults")
+}
