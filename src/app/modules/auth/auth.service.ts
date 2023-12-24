@@ -43,7 +43,7 @@ const signinUser = async (
     config.jwt.expires_in as string
   );
   // console.log(accessToken);
-  return { token: accessToken };
+  return { user, token: accessToken };
 };
 
 export const AuthService = { signupteUser, signinUser };

@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { userRole } from './auth.constants';
 
 const signupUser = z.object({
   body: z.object({
@@ -11,9 +10,6 @@ const signupUser = z.object({
     }),
     password: z.string({
       required_error: 'Password is required',
-    }),
-    role: z.enum(userRole as [string, ...string[]], {
-      required_error: 'Role is required',
     }),
     contactNo: z.string({
       required_error: 'Contact Number is required',

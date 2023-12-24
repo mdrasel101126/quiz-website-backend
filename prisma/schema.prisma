@@ -51,9 +51,8 @@ model Quiz {
 
 model PerformerResult {
   id            String   @id @default(uuid())
-  userId        String
+  email         String
   categoryId    String
-  questions     Json?
   totalQuestion Int
   totalCorrect  Int
   review        String

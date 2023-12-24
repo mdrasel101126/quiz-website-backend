@@ -1,6 +1,7 @@
 import { Quiz } from '@prisma/client';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
+import { shuffleArray } from '../../../helpers/shuffuleArray';
 import prisma from '../../../shared/prisma';
 
 const createQuiz = async (data: Quiz): Promise<Quiz> => {
@@ -58,6 +59,13 @@ const getExamQuestions = async (categoryId: string): Promise<Quiz[]> => {
   const result = await prisma.$queryRaw<
     Quiz[]
   >`SELECT * FROM "quizzes" WHERE "categoryId" =${categoryId} ORDER BY RANDOM() LIMIT 10 `;
+
+  if (result.length > 0) {
+    result.forEach(res => {
+      const newOptions = shuffleArray(res.options);
+      res.options = newOptions;
+    });
+  }
 
   return result;
 };
