@@ -38,7 +38,7 @@ const signinUser = async (
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid password!');
   }
   const accessToken = jwtHelpers.createToken(
-    { id: user.id, role: user.role },
+    { email: user.email, role: user.role },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
   );

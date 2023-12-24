@@ -1,6 +1,7 @@
 import express from 'express';
 import { AuthRoutes } from '../modules/auth/auth.route';
 import { CategoryRoutes } from '../modules/category/category.route';
+import { RerformerResultRoutes } from '../modules/performerResult/performerResult.route';
 import { ProfileRoutes } from '../modules/profile/profile.route';
 import { QuizRoutes } from '../modules/quiz/quiz.route';
 import { UserRoutes } from '../modules/user/user.route';
@@ -28,6 +29,10 @@ const moduleRoutes = [
   {
     path: '/quizzes',
     route: QuizRoutes,
+  },
+  {
+    path: '/results',
+    route: RerformerResultRoutes,
   },
 ];
 

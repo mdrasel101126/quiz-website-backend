@@ -11,7 +11,11 @@ const createPerformerResult = async (
 };
 
 const getMyResults = async (email: string): Promise<PerformerResult[]> => {
-  const result = await prisma.performerResult.findMany({ where: { email } });
+  console.log(email);
+  const result = await prisma.performerResult.findMany({
+    where: { email: email },
+    include: { category: true },
+  });
   return result;
 };
 

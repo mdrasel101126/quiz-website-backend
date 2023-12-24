@@ -28,4 +28,4 @@ router.delete(
 router.get('/', CategoryController.getAllCategory);
 router.get('/:id', CategoryController.getSingleCategory); */
 
-export const CategoryRoutes = router;
+export const RerformerResultRoutes = router;
